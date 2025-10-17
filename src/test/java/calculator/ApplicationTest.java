@@ -15,12 +15,12 @@ class ApplicationTest extends NsTest {
     Calculator calculator = new Calculator();
 
     @Test
-    @DisplayName("기본 구분자 처리 테스트")
+    @DisplayName("숫자 추출 테스트")
     void findNumberTest() {
         String input = "1,2:5";
         List<String> testNumbers = List.of("1", "2", "5");
 
-        List<String> resultNumbers = calculatorService.findNumber(input);
+        List<String> resultNumbers = calculatorService.findNumber(input, "[,:]");
 
         assertThat(resultNumbers).containsAll(testNumbers);
     }
@@ -35,6 +35,39 @@ class ApplicationTest extends NsTest {
         int resultNumber = calculator.addNumber(inputNumber);
 
         assertThat(resultNumber).isEqualTo(testNumber);
+    }
+
+    @Test
+    @DisplayName("커스텀 구분자 추출 테스트")
+    void findCustomDelimiterTest() {
+        String input = "//;\\n3;4;5";
+        String testDelimiter = ";";
+
+        String resultDelimiter = calculatorService.findCustomDelimiter(input);
+
+        assertThat(resultDelimiter).isEqualTo(testDelimiter);
+    }
+
+    @Test
+    @DisplayName("구분자 별 숫자 추출 테스트(기본 구분자)")
+    void findNumByDelimiterTest1() {
+        String input = "3,4:5";
+        List<String> testNumbers = List.of("3", "4", "5");
+
+        List<String> resultNumbers = calculatorService.findNumByDelimiter(input);
+
+        assertThat(resultNumbers).containsAll(testNumbers);
+    }
+
+    @Test
+    @DisplayName("구분자 별 숫자 추출 테스트(커스텀 구분자)")
+    void findNumByDelimiterTest2() {
+        String input = "//;\\n3;4;5:6,7";
+        List<String> testNumbers = List.of("3", "4", "5", "6", "7");
+
+        List<String> resultNumbers = calculatorService.findNumByDelimiter(input);
+
+        assertThat(resultNumbers).containsAll(testNumbers);
     }
 
     @Override
