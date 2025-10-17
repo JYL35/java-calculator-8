@@ -8,9 +8,23 @@ public class CalculatorService {
     private final String PREFIX_CUSTOM_DELIMITER = "//";
     private final String SUFFIX_CUSTOM_DELIMITER = "\\n";
 
+    // 구분자 별 숫자 추출
+    public List<String> findNumByDelimiter(String input) {
+        String customDelimiter = findCustomDelimiter(input);
+
+        if(customDelimiter.isEmpty()) {
+            return findNumber(input, BASIC_DELIMITER);
+        }
+
+        // custom 구분자가 존재할 경우 뒤의 식만 따로 추출
+        String subInput = input.substring(input.indexOf(SUFFIX_CUSTOM_DELIMITER) + 2, input.length());
+
+        return findNumber(subInput, customDelimiter + "|" + BASIC_DELIMITER);
+    }
+
     // 숫자 추출
-    public List<String> findNumber(String input) {
-        List<String> extractedNumbers = List.of(input.split(BASIC_DELIMITER));
+    public List<String> findNumber(String input, String delimiter) {
+        List<String> extractedNumbers = List.of(input.split(delimiter));
 
         return extractedNumbers;
     }
