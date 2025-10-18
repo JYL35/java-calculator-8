@@ -1,5 +1,7 @@
 package calculator.service;
 
+import calculator.exception.GlobalException;
+
 import java.util.List;
 
 public class CalculatorService {
@@ -26,6 +28,9 @@ public class CalculatorService {
     public List<String> findNumber(String input, String delimiter) {
         List<String> extractedNumbers = List.of(input.split(delimiter));
 
+        // 추출된 숫자가 정상인지 확인
+        GlobalException.checkExtractedNumber(extractedNumbers);
+
         return extractedNumbers;
     }
 
@@ -36,13 +41,13 @@ public class CalculatorService {
             int prefixIdx = input.indexOf(PREFIX_CUSTOM_DELIMITER);
             int suffixIdx = input.indexOf(SUFFIX_CUSTOM_DELIMITER);
 
-            if (prefixIdx != 0 || suffixIdx == 2) {
-                // "//"가 문자열 처음이 아니면 예외, "\n"이 index 2에 위치해있으면 커스텀 구분자가 없으므로 예외
-                System.out.println("예외 발생! 추후에 개발");
-            }
+            GlobalException.checkCustomDelimiterIndex(prefixIdx);
 
             // 커스텀 구분자 추출
             String customDelimiter = input.substring(prefixIdx + PREFIX_CUSTOM_DELIMITER.length(), suffixIdx);
+
+            // 커스텀 구분자가 정상인지 확인
+            GlobalException.checkCustomDelimiter(customDelimiter);
 
             return customDelimiter;
         }
