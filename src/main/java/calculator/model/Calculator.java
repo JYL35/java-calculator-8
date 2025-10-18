@@ -3,13 +3,13 @@ package calculator.model;
 import java.util.List;
 
 public class Calculator {
-    private int result;
 
     // 더하기 기능
-    public int addNumber(List<String> numberList) {
+    public double addNumber(List<String> numberList) {
+        double result = 0;
 
         for (String num : numberList) {
-            result += Integer.parseInt(num);
+            result += Double.parseDouble(num);
         }
 
         return result;

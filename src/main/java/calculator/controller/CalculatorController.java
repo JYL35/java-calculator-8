@@ -19,7 +19,7 @@ public class CalculatorController {
         System.out.println("덧셈할 문자열을 입력해 주세요.");
         String input = Console.readLine();
         List<String> numberList = calculatorService.findNumByDelimiter(input);
-        int result = calculator.addNumber(numberList);
+        double result = calculator.addNumber(numberList);
 
         System.out.println("결과 : " + result);
     }
