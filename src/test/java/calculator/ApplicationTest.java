@@ -28,11 +28,11 @@ class ApplicationTest extends NsTest {
     @Test
     @DisplayName("더하기 테스트")
     void addNumberTest() {
-        int testNumber = 8;
+        double testNumber = 8;
 
         List<String> inputNumber = List.of("1", "2", "5");
 
-        int resultNumber = calculator.addNumber(inputNumber);
+        double resultNumber = calculator.addNumber(inputNumber);
 
         assertThat(resultNumber).isEqualTo(testNumber);
     }
