@@ -2,25 +2,33 @@ package calculator.controller;
 
 import calculator.model.Calculator;
 import calculator.service.CalculatorService;
-import camp.nextstep.edu.missionutils.Console;
+import calculator.view.InputView;
+import calculator.view.OutputView;
 
 import java.util.List;
 
 public class CalculatorController {
     Calculator calculator;
     CalculatorService calculatorService;
+    InputView inputView;
+    OutputView outputView;
 
-    public CalculatorController(Calculator calculator, CalculatorService calculatorService) {
+    public CalculatorController(Calculator calculator,
+                                CalculatorService calculatorService,
+                                InputView inputView, 
+                                OutputView outputView) {
         this.calculator = calculator;
         this.calculatorService = calculatorService;
+        this.inputView = inputView;
+        this.outputView = outputView;
     }
 
     public void calculatorStart() {
-        System.out.println("덧셈할 문자열을 입력해 주세요.");
-        String input = Console.readLine();
+        String input = inputView.userInput();
+
         List<String> numberList = calculatorService.findNumByDelimiter(input);
         double result = calculator.addNumber(numberList);
 
-        System.out.println("결과 : " + result);
+        outputView.resultOutput(result);
     }
 }
